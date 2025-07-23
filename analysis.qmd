@@ -2,5 +2,40 @@
 title: "Cumulative"
 author: "Paramanyu Gupta"
 format: html
+execute: 
+  echo: false
 ---
 
+```{r setup}
+#| message: false
+library(tidyverse)
+library(primer.data)
+```
+
+
+```{r}
+x <- ces |> 
+  filter(year == 2020) |> 
+  select(approval, education, ideology) |> 
+  drop_na() |> 
+  slice_sample(n = 2000)
+```
+
+```{r ideology-approval-plot}
+#| fig-width: 10
+#| fig-height: 6
+
+x |> 
+  ggplot(aes(x = ideology, fill = approval)) +
+  geom_bar() +
+  labs(
+    title = "Presidential Approval by Political Ideology in 2020",
+    subtitle = "Approval ratings vary significantly across the ideological spectrum.",
+    x = "Political Ideology",
+    y = "Number of Respondents",
+    fill = "Presidential Approval",
+    caption = "Data Source: Cooperative Election Study (2020)"
+  )
+```
+
+Public opinion about political leaders often depends on where people fall on the ideological spectrum. Using data from the 2020 Cooperative Election Study, one of the largest political surveys in the U.S., we explore how presidential approval varies across different ideological groups. A potential weakness of this model is that the relationships between ideology, education, and approval may not be stable over time, which could limit the generalizability of our findings to future political contexts.
